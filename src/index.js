@@ -32,8 +32,9 @@ function removeProduct(event) {
 }
 
 function createProduct() {
-  let newNameToAdd = document.querySelector('.create-product [type="text"]').value
-  let newPriceToAdd = document.querySelector('.create-product [type="number"]').value
+  let newNameToAdd = document.querySelector('.create-product [type="text"]')
+  let newPriceToAdd = document.querySelector('.create-product [type="number"]')
+
 
   const tableBodyElement = document.querySelector("tbody")
   const line = document.querySelector(".product")
@@ -44,8 +45,8 @@ function createProduct() {
   let newLineName = newLine.querySelector(".name span")
   newLine.querySelector(".quantity input").value = 1;
 
-  newLinePrice.textContent=newPriceToAdd;
-  newLineName.textContent=newNameToAdd;
+  newLinePrice.textContent=newPriceToAdd.value;
+  newLineName.textContent=newNameToAdd.value;
   
   calculateAll()
 
@@ -54,8 +55,8 @@ function createProduct() {
     removeProduct(event)
   }) 
 
-  newNameToAdd.textContent="viaos"
-  
+  newPriceToAdd.value=0;
+  newNameToAdd.value=""
 }
 
 
