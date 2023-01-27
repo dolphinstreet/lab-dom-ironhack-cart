@@ -1,42 +1,78 @@
 // ITERATION 1
 
 function updateSubtotal(product) {
-  console.log('Calculating subtotal, yey!');
+  const price = product.querySelector('.price span');
+  const quantity = product.querySelector(".quantity input")
+  const subTotal = product.querySelector(".subtotal span")
 
-  //... your code goes here
+  subTotal.textContent = Number(price.textContent)*Number(quantity.value)
+  return Number(subTotal.textContent);
+  
 }
 
 function calculateAll() {
-  // code in the following two lines is added just for testing purposes.
-  // it runs when only iteration 1 is completed. at later point, it can be removed.
-  const singleProduct = document.querySelector('.product');
-  updateSubtotal(singleProduct);
-  // end of test
+  const allProducts = document.querySelectorAll(".product")
+  const totalPriceElement = document.querySelector("#total-value span")
+  let total = 0;
 
-  // ITERATION 2
-  //... your code goes here
+  allProducts.forEach(prod =>{
+    updateSubtotal(prod)
+    total+=updateSubtotal(prod)
+  })
 
-  // ITERATION 3
-  //... your code goes here
+  totalPriceElement.textContent=total
 }
 
-// ITERATION 4
 
 function removeProduct(event) {
-  const target = event.currentTarget;
-  console.log('The target in remove is:', target);
-  //... your code goes here
-}
+  const productToRemove = event.currentTarget.closest(".product")
+  productToRemove.remove()
+  calculateAll()
 
-// ITERATION 5
+}
 
 function createProduct() {
-  //... your code goes here
+  let newNameToAdd = document.querySelector('.create-product [type="text"]').value
+  let newPriceToAdd = document.querySelector('.create-product [type="number"]').value
+
+  const tableBodyElement = document.querySelector("tbody")
+  const line = document.querySelector(".product")
+  const newLine = line.cloneNode(true)
+  tableBodyElement.appendChild(newLine)
+
+  let newLinePrice = newLine.querySelector('.price span');
+  let newLineName = newLine.querySelector(".name span")
+  newLine.querySelector(".quantity input").value = 1;
+
+  newLinePrice.textContent=newPriceToAdd;
+  newLineName.textContent=newNameToAdd;
+  
+  calculateAll()
+
+  const newRemoveButton = newLine.querySelector(".btn.btn-remove")
+  newRemoveButton.addEventListener("click",event => {
+    removeProduct(event)
+  }) 
+
+  newNameToAdd.textContent="viaos"
+  
 }
+
+
 
 window.addEventListener('load', () => {
   const calculatePricesBtn = document.getElementById('calculate');
   calculatePricesBtn.addEventListener('click', calculateAll);
 
-  //... your code goes here
-});
+  const removeButton = document.querySelectorAll(".btn.btn-remove")
+  removeButton.forEach( btn => {
+    btn.addEventListener("click", event => {
+      removeProduct(event)
+    })
+  })
+
+  const createButton = document.getElementById('create');
+  createButton.addEventListener("click", createProduct)
+
+      
+})
